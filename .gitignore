@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+.idea/
+.vscode/
+
+# Working directories
+.work/
+work/
+out/
+
+# Clone targets (temporary)
+clone-cache/
+
+# OS files
+*.swp
+*.swo
+Thumbs.db
