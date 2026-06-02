@@ -10,13 +10,14 @@ CodeCloner 是一个 Claude Code Skill（技能文件）。当你在和 AI 对�
 ## 三步搞定
 
 1. 给 AI 一个 GitHub 链接，输入 `[激活抄袭者]`
-2. 告诉 AI 你想叫什么名字、要去掉/加上什么功能
-3. AI 帮你改好所有代码，打包好，推送到你的 GitHub
+2. AI 告诉你项目能不能抄、大概要改多少
+3. 告诉 AI 你想叫什么名字、要去掉/加上什么功能
+4. AI 帮你改好所有代码，验证能跑，推送到你的 GitHub
 
 ## 你需要什么？
 
 - 一个 GitHub 账号（用来存放代码）
-- 安装了 [Claude Code](https://claude.com/claude-code)（AI 助手）
+- 安装了 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)（AI 助手）
 - 不需要懂代码
 
 ## 怎么用？

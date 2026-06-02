@@ -4,6 +4,12 @@
 
 ---
 
+## 第 0 步：可行性评估
+
+详见 SKILL.md 第 0 步。重点检查许可证、技术栈可行性、项目规模。
+
+---
+
 ## 第 1 步：项目结构与技术栈拆解
 
 ### 1.1 克隆目标仓库
@@ -59,6 +65,66 @@ git clone <目标仓库URL> /tmp/codecloner-clone
 
 ---
 
+## 技术栈决策树
+
+识别完技术栈后，用下面的决策树决定交付方案和验证策略：
+
+```
+项目类型？
+├── Web 应用（有 HTTP 服务器）
+│   ├── Python (Django/Flask/FastAPI)
+│   │   ├── 交付: Dockerfile + requirements.txt + start.bat
+│   │   ├── 验证: python -c "import app" → 启动服务器 → curl localhost
+│   │   └── 依赖重生成: pip freeze > requirements.txt
+│   ├── Node.js (Express/Next/Nuxt)
+│   │   ├── 交付: Dockerfile + package.json + start.bat
+│   │   ├── 验证: npm ls → npm test → npm start → curl localhost
+│   │   └── 依赖重生成: rm package-lock.json && npm install
+│   ├── Go (Gin/Echo/Fiber)
+│   │   ├── 交付: Dockerfile + Makefile
+│   │   ├── 验证: go build ./... → go test ./... → ./app
+│   │   └── 依赖: go mod tidy
+│   └── Rust (Actix/Axum)
+│       ├── 交付: Dockerfile + Cargo.toml
+│       ├── 验证: cargo check → cargo test → cargo run
+│       └── 依赖: cargo update
+│
+├── CLI 工具（命令行程序）
+│   ├── Python
+│   │   ├── 交付: pyproject.toml + start.bat
+│   │   └── 验证: python -m <新包名> --help
+│   ├── Node.js
+│   │   ├── 交付: package.json (bin 字段) + start.bat
+│   │   └── 验证: node dist/index.js --help / npx <新包名> --help
+│   ├── Go
+│   │   ├── 交付: Makefile + 二进制
+│   │   └── 验证: go build -o <新名> . && ./<新名> --help
+│   └── Rust
+│       ├── 交付: Cargo.toml
+│       └── 验证: cargo build --release && ./target/release/<新名> --help
+│
+├── 库 / SDK（给其他项目用的工具包）
+│   ├── Python
+│   │   ├── 交付: pyproject.toml / setup.py
+│   │   └── 验证: python -c "import <新包名>; print(<新包名>.__version__)"
+│   ├── Node.js
+│   │   ├── 交付: package.json (name 字段)
+│   │   └── 验证: node -e "const lib = require('./'); console.log(lib)"
+│   ├── Go
+│   │   ├── 交付: go.mod
+│   │   └── 验证: go build ./...
+│   └── Rust
+│       ├── 交付: Cargo.toml (name 字段)
+│       └── 验证: cargo check
+│
+└── 其他 / 混合
+    ├── 交付: Dockerfile（最保险）
+    ├── 验证: docker build -t <新名> . && docker run <新名> --help
+    └── 依赖: 按主语言处理
+```
+
+---
+
 ## 第 2 步：大白话汇报
 
 ### 2.1 项目一句话概括
@@ -104,7 +170,7 @@ git clone <目标仓库URL> /tmp/codecloner-clone
 
 ### 3.2 执行品牌清洗
 
-严格按照 [`branding-checklist.md`](./branding-checklist.md) 逐项执行。
+严格按照 [`branding-checklist.md`](./branding-checklist.md) 逐项执行，优先完成 P0 项。
 
 **替换策略**：
 - 文本文件：全局搜索替换（大小写敏感 + 不敏感各跑一遍）
@@ -130,20 +196,25 @@ git clone <目标仓库URL> /tmp/codecloner-clone
 
 ---
 
-## 第 4 步：极简交付
+## 第 4 步：冒烟验证
 
-### 4.1 运行环境生成
+详见 SKILL.md 第 4 步。核心原则：**改完必须验，没验不算完。**
 
-根据技术栈自动选择：
+验证优先级：
+1. 语法级（必做）—— import/require 能通
+2. 编译级（如有编译步骤）—— build 能过
+3. 测试级（如有测试）—— test 能过
+4. 运行级（交付前必做）—— 能启动
 
-| 技术栈 | 推荐方案 | 安装命令 |
-|--------|---------|---------|
-| Python | requirements.txt + start.bat | `pip install -r requirements.txt` |
-| Node.js | package.json + start.bat | `npm install && npm start` |
-| Docker | Dockerfile + docker-compose.yml | `docker-compose up` |
-| Go | Makefile + 二进制 | `make build && ./app` |
+---
 
-### 4.2 README.md 模板
+## 第 5 步：极简交付
+
+### 5.1 运行环境生成
+
+根据技术栈决策树自动选择交付方案。
+
+### 5.2 README.md 模板
 
 必须包含的章节：
 1. **一句话介绍** —— 这是什么，给谁用
@@ -151,8 +222,9 @@ git clone <目标仓库URL> /tmp/codecloner-clone
 3. **三步安装** —— 1. 下载 2. 安装依赖 3. 运行
 4. **一键启动** —— 双击 `start.bat`（Windows）或 `./start.sh`（Mac/Linux）
 5. **常见问题** —— 环境出问题怎么办
+6. **致谢** —— 归因原项目（开源协议要求）
 
-### 4.3 Git 初始化
+### 5.3 Git 初始化
 
 ```bash
 git init
@@ -160,7 +232,7 @@ git add -A
 git commit -m "Initial commit: <新项目名> forked and customized from <原项目名>"
 ```
 
-### 4.4 推送到 GitHub
+### 5.4 推送到 GitHub
 
 ```bash
 gh repo create <仓库名> --public --description "<项目描述>"
@@ -176,6 +248,7 @@ git push -u origin master
 - 检查 URL 是否正确
 - 检查网络连接
 - 尝试 HTTPS 而不是 SSH
+- 仓库可能是私有的，需要老板提供访问权限
 
 ### 替换出错
 - 用 `git diff` 检查改动
@@ -183,6 +256,12 @@ git push -u origin master
 - 重新运行替换
 
 ### 推送失败
-- 检查 GitHub 认证
+- 检查 GitHub 认证（`gh auth status`）
 - 检查仓库名是否已存在
-- 确认 `gh auth status` 已登录
+- 检查网络连接
+
+### 冒烟验证失败
+- 读报错信息，区分品牌替换导致 vs 项目本身问题
+- 品牌替换导致 → 修好后重新验证
+- 项目本身问题 → 告诉老板原因和大白话修复方案
+- 修好后重新跑验证，直到通过
