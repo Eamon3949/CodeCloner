@@ -20,6 +20,26 @@ description: >-
 - `激活抄袭者`
 - 任何表达"我要把这个项目抄过来变成自己的"意图的消息
 
+### 静音模式（全自动跑）
+
+如果用户在激活词后加上 `--auto`，进入静音模式：
+
+```
+[激活抄袭者] https://github.com/xxx --auto
+```
+
+静音模式下，所有决策按以下默认值自动执行，**不再逐步提问**：
+
+| 决策 | 默认值 |
+|------|--------|
+| 项目名 | 去掉原作者名前缀后的原名（如 `GordenPPTSkill` → `PPTSkill`），除非用户指定 |
+| 版权 | 保留原协议类型，追加"Based on <原项目> by <原作者>" |
+| 功能裁剪 | 全部保留，不删不减 |
+| GitHub 推送 | 是 |
+| 干净度门槛 | 达到 80 分自动交付，未达 80 分仍然会打扰老板 |
+
+**静音模式只在 Step 0 可行性评估失败时才打断老板。**
+
 ## 🚨 铁律
 
 1. **老板不懂代码** —— 严禁直接扔成堆的源代码。用大白话、比喻、通俗语言解释一切。
@@ -93,7 +113,7 @@ description: >-
    - 项目结构（src/ 核心代码、config/ 配置、tests/ 测试 等）
 3. 识别所有品牌要素：
    - 项目名 / 仓库名
-   - 包名 / 模块名
+   - 包名 / 模块名（**所有变体形式**，详见 [`references/naming-variants.md`](./references/naming-variants.md)）
    - 作者名 / 版权声明
    - URL 和域名
    - Logo / 图标文件
@@ -179,6 +199,7 @@ description: >-
 - `git diff --stat` 确认改动范围
 - 确认没有误删关键文件
 - 确认没有遗漏的品牌痕迹（再搜一遍原项目名）
+- 跑 [`references/cleanliness-score.md`](./references/cleanliness-score.md) 干净度评分，确认 P0 项全部清零
 
 ---
 
@@ -262,7 +283,15 @@ git add -A
 git commit -m "Initial commit: project cloned and customized from <原项目名>"
 ```
 
-### 5.4 推送到 GitHub（如老板需要）
+### 5.4 干净度验收（交付前必过）
+
+使用 [`references/cleanliness-score.md`](./references/cleanliness-score.md) 的评分系统：
+
+- **≥ 90 分**：可以直接交付 🟢
+- **80-89 分**：可以交付，但告知老板 P2 有残留 🟡
+- **< 80 分**：**禁止交付**，继续清洗 🔴
+
+### 5.5 推送到 GitHub（如老板需要）
 
 使用 `gh` CLI 创建远程仓库并推送：
 
@@ -284,7 +313,10 @@ CodeCloner/
 ├── .gitignore
 └── references/
     ├── workflow.md                  <- 详细工作流文档（含技术栈决策树）
-    └── branding-checklist.md       <- 品牌清洗检查清单（含优先级 + grep 命令）
+    ├── branding-checklist.md       <- 品牌清洗检查清单（含优先级 + grep 命令）
+    ├── naming-variants.md          <- 命名变体映射规则（PascalCase/kebab/snake/SCREAMING/camelCase）
+    ├── cleanliness-score.md        <- 干净度评分系统（0-100 分，90 分以上可交付）
+    └── case-study-slidemaster.md   <- 实战案例：GordenPPTSkill → SlideMaster
 ```
 
 ## 注意事项
