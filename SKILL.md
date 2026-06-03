@@ -32,7 +32,7 @@ description: >-
 
 | 决策 | 默认值 |
 |------|--------|
-| 项目名 | 去掉原作者名前缀后的原名（如 `GordenPPTSkill` → `PPTSkill`），除非用户指定 |
+| 项目名 | 去掉原作者名前缀后的原名（如 `AuthorApp` → `App`），除非用户指定 |
 | 版权 | 保留原协议类型，追加"Based on <原项目> by <原作者>" |
 | 功能裁剪 | 全部保留，不删不减 |
 | GitHub 推送 | 是 |
@@ -316,8 +316,7 @@ CodeCloner/
     ├── branding-checklist.md       <- 品牌清洗检查清单（含优先级 + grep 命令）
     ├── naming-variants.md          <- 命名变体映射规则（PascalCase/kebab/snake/SCREAMING/camelCase）
     ├── cleanliness-score.md        <- 干净度评分系统（0-100 分，90 分以上可交付）
-    └── case-study-slidemaster.md   <- 实战案例：GordenPPTSkill → SlideMaster
-```
+    ```
 
 ## 注意事项
 

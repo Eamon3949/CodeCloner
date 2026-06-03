@@ -25,9 +25,9 @@
 # 干净度扫描脚本
 # 用法: bash cleanliness_scan.sh <原项目名> <原作者名> <原URL路径>
 
-OLD_NAME="$1"        # 例: GordenPPTSkill
-OLD_AUTHOR="$2"      # 例: GordenSun
-OLD_URL="$3"         # 例: GordenSun/GordenPPTSkill
+OLD_NAME="$1"        # 例: OriginalApp
+OLD_AUTHOR="$2"      # 例: OriginalAuthor
+OLD_URL="$3"         # 例: OriginalAuthor/OriginalApp
 
 EXCLUDE="--include="*.{py,js,ts,jsx,tsx,go,rs,java,rb,php,md,txt,json,yaml,yml,toml,cfg,ini,sh,bat,html,css,xml,env,conf}""
 
@@ -159,9 +159,9 @@ P2_misc = max(15 - (残留处数 × 1), 0)
 📊 干净度评分报告
 
 P0 核心替换（满分 40）：
-  ✅ GordenPPTSkill → SlideMaster: 0 处残留
-  ✅ gorden-ppt-skill → slide-master: 0 处残留
-  ✅ GordenSun/GordenPPTSkill → Eamon3949/SlideMaster: 0 处残留
+  ✅ OriginalApp → YourApp: 0 处残留
+  ✅ original-app → your-app: 0 处残留
+  ✅ OriginalAuthor/OriginalApp → YourName/YourApp: 0 处残留
   P0 核心得分: 40/40
 
 P0 import/包名路径（满分 30）：

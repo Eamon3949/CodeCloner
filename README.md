@@ -37,7 +37,7 @@
 | 🧹 **品牌清洗** | 按 P0 / P1 / P2 优先级逐项清洗，内置 0-100 分干净度评分系统 |
 | 💬 **大白话汇报** | 全程用你听得懂的话解释，不懂代码也能做决策 |
 | 🔇 **静音模式** | 加上 `--auto` 全自动跑，只在你需要的时候才打断你 |
-| 📖 **实战案例** | 附带完整案例（GordenPPTSkill → SlideMaster），照着走一遍就会 |
+| 📖 **参考文档** | 附带 5 份详细参考（工作流、品牌清单、命名变体、评分系统、清洗规范） |
 
 ---
 
@@ -57,10 +57,10 @@
 
 第 2 步 ── 看报告，提需求
 AI：📋 可行性报告：MIT 协议 ✅ 可以抄，约 120 个文件，预计分 2-3 批改完
-你：项目叫 SlideMaster，去掉社区功能
+你：项目叫 MyApp，去掉社区功能
 
 第 3 步 ── 等交付
-AI：✅ 改完了！已推送到 https://github.com/你的用户名/SlideMaster
+AI：✅ 改完了！已推送到 https://github.com/你的用户名/MyApp
 ```
 
 ### 静音模式
@@ -159,7 +159,7 @@ CodeCloner/
     ├── branding-checklist.md       ← 品牌清洗清单（P0/P1/P2 优先级 + grep 模板）
     ├── naming-variants.md          ← 命名变体映射规则（8 种变体全覆盖）
     ├── cleanliness-score.md        ← 干净度评分系统（0-100 分）
-    └── case-study-slidemaster.md   ← 实战案例：GordenPPTSkill → SlideMaster
+    └── cleanliness-score.md        ← 干净度评分系统（0-100 分）
 ```
 
 ---
@@ -172,7 +172,6 @@ CodeCloner/
 | [branding-checklist.md](./references/branding-checklist.md) | 改名字时照着这个清单走，P0 是必须改的 |
 | [naming-variants.md](./references/naming-variants.md) | 项目名的 8 种变体形式，替换时一个不漏 |
 | [cleanliness-score.md](./references/cleanliness-score.md) | 0-100 分评分系统，90 分以上才允许交付 |
-| [case-study-slidemaster.md](./references/case-study-slidemaster.md) | 真实案例全记录，照着走一遍就会 |
 
 ---
 
@@ -187,18 +186,6 @@ CodeCloner/
 | AGPL | ⚠️ 能 | 网络服务也要开源 |
 | Unlicense | ✅ 能 | 无要求 |
 | 无许可证 | 🚫 不能 | 法律上 = 保留所有权利 |
-
----
-
-## 🎯 实战案例
-
-**GordenPPTSkill → SlideMaster** 全过程记录在 [`references/case-study-slidemaster.md`](./references/case-study-slidemaster.md)。
-
-关键数据：
-- 原项目：99 个文件，约 90MB
-- 许可证：MIT ✅
-- 品牌清洗得分：**95 / 100 🟢 A 级**
-- 耗时：约 30 分钟（人工交互 3 次，其余全自动）
 
 ---
 
