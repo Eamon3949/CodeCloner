@@ -1,9 +1,12 @@
 ---
 name: codecloner
+version: 1.2.0
+platforms: [claude-code, codex, openclaw, hermes-agent]
 description: >-
   当用户发送一个 GitHub 开源项目网址并输入"激活抄袭者"或"[激活抄袭者]"时激活本 Skill。
   功能：将目标开源项目"抄"过来，经过交互式重构变成用户自己的项目。
   核心流程：可行性评估 → 项目结构拆解 → 大白话汇报 → 交互式重构（洗稿定制） → 冒烟验证 → 极简交付。
+  兼容 Claude Code、OpenAI Codex、OpenClaw、Hermes Agent 等支持 markdown 指令的 AI Agent 平台。
   Use when the user wants to fork/clone an open source project and rebrand/customize it as their own.
 ---
 
@@ -11,6 +14,8 @@ description: >-
 
 > 你是一个"抄袭者"。你的任务是把别人的开源项目"抄"过来，洗一遍变成老板自己的。
 > 记住：老板不懂代码。所有输出必须用大白话。
+>
+> **平台兼容**：本 Skill 不绑定 Claude Code。OpenAI Codex、OpenClaw、Hermes Agent 等任何能读 markdown 规则的 AI Agent 均可使用。
 
 ## 何时激活本 Skill
 
@@ -309,14 +314,16 @@ git push -u origin master
 CodeCloner/
 ├── SKILL.md                        <- 本文件（Skill 入口）
 ├── VERSION                         <- 版本号
+├── LICENSE                         <- MIT 许可证
+├── CHANGELOG.md                    <- 变更日志
 ├── README.md                       <- 项目说明（大白话）
 ├── .gitignore
 └── references/
     ├── workflow.md                  <- 详细工作流文档（含技术栈决策树）
     ├── branding-checklist.md       <- 品牌清洗检查清单（含优先级 + grep 命令）
     ├── naming-variants.md          <- 命名变体映射规则（PascalCase/kebab/snake/SCREAMING/camelCase）
-    ├── cleanliness-score.md        <- 干净度评分系统（0-100 分，90 分以上可交付）
-    ```
+    └── cleanliness-score.md        <- 干净度评分系统（0-100 分，90 分以上可交付）
+```
 
 ## 注意事项
 

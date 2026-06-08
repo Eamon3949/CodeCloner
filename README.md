@@ -4,9 +4,10 @@
 
 **把别人的开源项目"抄"过来，洗一遍变成你自己的。**
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/Eamon3949/CodeCloner)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/Eamon3949/CodeCloner)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Skill](https://img.shields.io/badge/type-Claude%20Code%20Skill-purple.svg)](https://docs.anthropic.com/en/docs/claude-code)
+[![Skill](https://img.shields.io/badge/type-AI%20Agent%20Skill-purple.svg)](#-install)
+[![Platforms](https://img.shields.io/badge/platforms-Claude%20Code%20|%20Codex%20|%20OpenClaw%20|%20Hermes-orange.svg)](#-supported-platforms)
 
 </div>
 
@@ -16,7 +17,7 @@
 
 你看到一个开源项目，心想：**"这东西真好，要是叫我的名字就好了。"**
 
-抄袭者就是一个 Claude Code 技能文件。你给它一个 GitHub 开源项目链接，说一声 **`[激活抄袭者]`**，AI 就会自动帮你：
+CodeCloner 就是一个 AI Agent 技能文件。你给它一个 GitHub 开源项目链接，说一声 **`[激活抄袭者]`**，AI 就会自动帮你：
 
 1. 🔍 查清项目能不能抄、怎么抄（许可证检查）
 2. 📋 大白话告诉你项目是什么、有什么、要改哪里
@@ -25,6 +26,47 @@
 5. 📦 打包交付，推到你的 GitHub
 
 **全程不用写一行代码。你只管提需求，AI 帮你干活。**
+
+---
+
+## 🌐 支持的平台
+
+CodeCloner 不绑定任何平台——任何能读 markdown 指令的 AI Agent 都能用：
+
+| 平台 | 怎么用 |
+|:----:|--------|
+| 🟣 **Claude Code** | 原生 Skill 格式，直接放到 `~/.claude/skills/` 或项目 `.claude/skills/` |
+| 🟢 **OpenAI Codex** | 把 SKILL.md 内容贴进项目根目录的 `CODEX.md` 或作为 system prompt |
+| 🟡 **OpenClaw** | 作为 Agent 指令文件导入，或贴进对话开头 |
+| 🔵 **Hermes Agent** | 作为 skill/instruction 文件加载，或贴进 system prompt |
+| 🔘 **其他 AI Agent** | 只要能读 markdown 规则，就能用 |
+
+---
+
+## 📦 怎么安装？
+
+### Claude Code
+
+```bash
+# 方式 1：全局安装（所有项目都能用）
+git clone https://github.com/Eamon3949/CodeCloner.git ~/.claude/skills/CodeCloner
+
+# 方式 2：项目级安装（只在当前项目能用）
+git clone https://github.com/Eamon3949/CodeCloner.git .claude/skills/CodeCloner
+```
+
+装完后在任何对话里输入 `[激活抄袭者]` + GitHub 链接即可触发。
+
+### OpenAI Codex
+
+```bash
+# 把 SKILL.md 内容复制进项目根目录
+cp SKILL.md /your/project/CODEX.md
+```
+
+### OpenClaw / Hermes Agent / 其他平台
+
+把 `SKILL.md` 的内容复制粘贴到对话开头，或作为 system prompt / instruction 文件导入。格式是通用 markdown，不需要特殊适配。
 
 ---
 
@@ -37,7 +79,7 @@
 | 🧹 **品牌清洗** | 按 P0 / P1 / P2 优先级逐项清洗，内置 0-100 分干净度评分系统 |
 | 💬 **大白话汇报** | 全程用你听得懂的话解释，不懂代码也能做决策 |
 | 🔇 **静音模式** | 加上 `--auto` 全自动跑，只在你需要的时候才打断你 |
-| 📖 **参考文档** | 附带 5 份详细参考（工作流、品牌清单、命名变体、评分系统、清洗规范） |
+| 📖 **参考文档** | 附带 4 份详细参考（工作流、品牌清单、命名变体、评分系统） |
 
 ---
 
@@ -46,7 +88,7 @@
 ### 你需要什么？
 
 - 一个 GitHub 账号
-- 安装了 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- 安装了 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 或 [Codex](https://openai.com/codex/) 或其他 AI Agent 工具
 - **不需要懂代码**
 
 ### 三步搞定
@@ -152,13 +194,14 @@ AI：（安静地干活，只在出问题时才问你）
 CodeCloner/
 ├── SKILL.md                        ← 技能入口（6 步工作流规则）
 ├── VERSION                         ← 版本号
+├── LICENSE                         ← MIT 许可证
+├── CHANGELOG.md                    ← 变更日志
 ├── README.md                       ← 你正在看的这个文件
 ├── .gitignore
 └── references/
     ├── workflow.md                  ← 详细工作流（含技术栈决策树）
     ├── branding-checklist.md       ← 品牌清洗清单（P0/P1/P2 优先级 + grep 模板）
     ├── naming-variants.md          ← 命名变体映射规则（8 种变体全覆盖）
-    ├── cleanliness-score.md        ← 干净度评分系统（0-100 分）
     └── cleanliness-score.md        ← 干净度评分系统（0-100 分）
 ```
 
