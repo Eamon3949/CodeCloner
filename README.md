@@ -4,10 +4,10 @@
 
 **把别人的开源项目"抄"过来，洗一遍变成你自己的。**
 
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/Eamon3949/CodeCloner)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/Eamon3949/CodeCloner)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Skill](https://img.shields.io/badge/type-AI%20Agent%20Skill-purple.svg)](#-install)
-[![Platforms](https://img.shields.io/badge/platforms-Claude%20Code%20|%20Codex%20|%20OpenClaw%20|%20Hermes-orange.svg)](#-supported-platforms)
+[![Skill](https://img.shields.io/badge/type-AI%20Agent%20Skill-purple.svg)](#-怎么安装)
+[![Platforms](https://img.shields.io/badge/platforms-Claude%20Code%20|%20Codex%20|%20OpenClaw%20|%20Hermes-orange.svg)](#-支持的平台)
 
 </div>
 
@@ -36,7 +36,7 @@ CodeCloner 不绑定任何平台——任何能读 markdown 指令的 AI Agent �
 | 平台 | 怎么用 |
 |:----:|--------|
 | 🟣 **Claude Code** | 原生 Skill 格式，直接放到 `~/.claude/skills/` 或项目 `.claude/skills/` |
-| 🟢 **OpenAI Codex** | 把 SKILL.md 内容贴进项目根目录的 `CODEX.md` 或作为 system prompt |
+| 🟢 **OpenAI Codex** | 把 SKILL.md 内容贴进项目根目录的 `AGENTS.md` 或作为 system prompt |
 | 🟡 **OpenClaw** | 作为 Agent 指令文件导入，或贴进对话开头 |
 | 🔵 **Hermes Agent** | 作为 skill/instruction 文件加载，或贴进 system prompt |
 | 🔘 **其他 AI Agent** | 只要能读 markdown 规则，就能用 |
@@ -61,7 +61,7 @@ git clone https://github.com/Eamon3949/CodeCloner.git .claude/skills/CodeCloner
 
 ```bash
 # 把 SKILL.md 内容复制进项目根目录
-cp SKILL.md /your/project/CODEX.md
+cp SKILL.md /your/project/AGENTS.md
 ```
 
 ### OpenClaw / Hermes Agent / 其他平台
@@ -87,8 +87,10 @@ cp SKILL.md /your/project/CODEX.md
 
 ### 你需要什么？
 
-- 一个 GitHub 账号
+- 一个 GitHub / GitLab / Bitbucket 账号
+- 安装了 [Git](https://git-scm.com/)
 - 安装了 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 或 [Codex](https://openai.com/codex/) 或其他 AI Agent 工具
+- 如果要自动推送仓库：安装 [GitHub CLI (gh)](https://cli.github.com/)
 - **不需要懂代码**
 
 ### 三步搞定
@@ -96,6 +98,7 @@ cp SKILL.md /your/project/CODEX.md
 ```
 第 1 步 ── 发送项目链接
 你：https://github.com/某人/某个项目 [激活抄袭者]
+（也支持 GitLab、Bitbucket 等平台的链接）
 
 第 2 步 ── 看报告，提需求
 AI：📋 可行性报告：MIT 协议 ✅ 可以抄，约 120 个文件，预计分 2-3 批改完
@@ -136,7 +139,7 @@ AI：（安静地干活，只在出问题时才问你）
        ▼
 ┌─────────────┐
 │  第 2 步     │  📋 大白话汇报
-│  一句话说清楚  │  → "这是一个让 AI 自动做 PPT 的工具"
+│  一句话说清楚  │  → "这是一个让开发者自动生 API 文档的工具"
 │  核心亮点     │  → 3-5 条，每条有比喻
 │  问你想改什么  │  → 叫什么名？删什么功能？加什么？
 └──────┬──────┘
@@ -153,6 +156,7 @@ AI：（安静地干活，只在出问题时才问你）
 ┌─────────────┐
 │  第 4 步     │  ✅ 冒烟验证
 │  语法级验证    │  → 编译检查 / import 检查
+│  安全扫描      │  → npm audit / pip-audit 等
 │  运行级验证    │  → 项目能启动
 │  干净度评分    │  → 搜索残留的原项目名
 └──────┬──────┘
@@ -244,6 +248,22 @@ CodeCloner/
 ## 📜 许可证
 
 本项目采用 [MIT License](./LICENSE) 开源。
+
+---
+
+## 🤝 参与贡献
+
+欢迎贡献！你可以：
+
+- **提 Bug** — 在 [Issues](https://github.com/Eamon3949/CodeCloner/issues) 里描述问题
+- **提建议** — 在 Issues 里标记为 `enhancement`
+- **提 PR** — Fork 仓库，改完后提 Pull Request
+- **加平台** — 如果你用过的 AI Agent 平台不在列表里，告诉我们怎么适配
+
+贡献前请确保：
+- 改动不影响 SKILL.md 的通用性（不要加平台特定的硬编码）
+- 新加的参考文档放在 `references/` 下
+- 更新 CHANGELOG.md
 
 ---
 

@@ -16,7 +16,10 @@
 
 ```bash
 # 克隆到临时目录，不污染工作区
+# Linux/Mac:
 git clone <目标仓库URL> /tmp/codecloner-clone
+# Windows:
+git clone <目标仓库URL> %TEMP%\codecloner-clone
 ```
 
 如果目标仓库使用了 Git LFS，加上 `--no-tags` 避免拉取大文件。
@@ -131,7 +134,7 @@ git clone <目标仓库URL> /tmp/codecloner-clone
 
 **模板**：这是一个让 [谁] 能够 [做什么] 的 [类型]。
 
-**示例**：这是一个让 AI 助手能够自动生成中文 PPT 的工具包，就像一个智能排版助手。
+**示例**：这是一个让开发者能够一键生成 API 文档的工具包，就像一个自动化说明书工厂。
 
 ### 2.2 核心亮点（3-5 条）
 
@@ -235,9 +238,13 @@ git commit -m "Initial commit: <新项目名> forked and customized from <原项
 ### 5.4 推送到 GitHub
 
 ```bash
+# 检测默认分支名（GitHub 默认 main，旧仓库可能是 master）
+DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+DEFAULT_BRANCH=${DEFAULT_BRANCH:-main}
+
 gh repo create <仓库名> --public --description "<项目描述>"
 git remote add origin https://github.com/<用户名>/<仓库名>.git
-git push -u origin master
+git push -u origin $DEFAULT_BRANCH
 ```
 
 ---
