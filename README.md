@@ -17,7 +17,7 @@
 
 你看到一个开源项目，心想：**"这东西真好，要是叫我的名字就好了。"**
 
-CodeCloner 就是一个 AI Agent 技能文件。你给它一个 GitHub 开源项目链接，说一声 **`[激活抄袭者]`**，AI 就会自动帮你：
+CodeCloner 就是一个 AI Agent 技能文件。你给它一个开源项目链接，说一声 **`[激活抄袭者]`**，AI 就会自动帮你：
 
 1. 🔍 查清项目能不能抄、怎么抄（许可证检查）
 2. 📋 大白话告诉你项目是什么、有什么、要改哪里
@@ -55,7 +55,7 @@ git clone https://github.com/Eamon3949/CodeCloner.git ~/.claude/skills/CodeClone
 git clone https://github.com/Eamon3949/CodeCloner.git .claude/skills/CodeCloner
 ```
 
-装完后在任何对话里输入 `[激活抄袭者]` + GitHub 链接即可触发。
+装完后在任何对话里输入 `[激活抄袭者]` + 项目链接即可触发。
 
 ### OpenAI Codex
 
