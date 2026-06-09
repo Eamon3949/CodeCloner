@@ -1,6 +1,6 @@
 ---
 name: codecloner
-version: 1.3.0
+version: 1.4.0
 platforms: [claude-code, codex, openclaw, hermes-agent]
 description: >-
   当用户发送一个开源项目网址并输入"激活抄袭者"或"[激活抄袭者]"时激活本 Skill。

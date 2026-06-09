@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-06-09
+
+### Added
+- **logo.svg** — Project logo (two overlapping cards with clone badge)
+- **Bilingual README** — Full English translation alongside Chinese
+- Language switcher at top of README
+
+### Changed
+- README structure: merged Chinese and English into single document with clear sections
+- Project structure now includes logo.svg
+
 ## [1.3.0] - 2026-06-09
 
 ### Added
