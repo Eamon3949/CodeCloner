@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-07-12
+
+### Fixed
+- **CSSOM 捕获修复** — styled-components v6 用 `insertRule()` 注入样式，`<style>.textContent` 为空。
+  改为从 `document.styleSheets[i].cssRules` 读取运行时样式
+- **图片替换改为 DOM 级** — 不再用正则匹配 HTML 文本，改用 Playwright `page.evaluate()` 
+  在浏览器中直接替换 `<img src>`、`<source srcset>`、CSS background-image、favicon 
+  的 URL 为 data URI。彻底解决 `srcset` 漏网、裸 base64 缺前缀、favicon 不替换等问题
+- **懒加载图片补抓** — 滚动 5 次触发 IntersectionObserver，未拦截的图片用 httpx 替补下载
+- 已验证：Coinbase 中文首页（62 图片 → 6.7MB 单文件，0 未内联 `<img>`）
+
 ## [2.0.0] - 2026-07-10
 
 ### Added

@@ -104,11 +104,13 @@ python scripts/clone_intercept.py
 
 脚本自动完成：
 1. 用 Playwright 打开目标 URL（1440×900 视口）
-2. 通过 `page.on("response")` 拦截所有 CSS（17个/734KB）、图片（16张/~2.4MB）
-3. 把 CSS 合并成 `<style>` 块插入 `<head>`
-4. 把图片转换为 base64 data URI 并替换所有 `<img src>` 引用
-5. 删除外部 CDN CSS 链接（避免离线后 403 空白）
-6. 输出单文件 HTML + 截图留档
+2. 通过 `page.on("response")` 拦截所有 CSS 和图片响应
+3. **滚动 5 次**触发懒加载图片
+4. **CSSOM 捕获** — 从 `document.styleSheets[i].cssRules` 捞 styled-components 等运行时注入的样式
+5. **httpx 替补** — 找出 DOM 中有但浏览器没拦截到的图片，直接 HTTP 下载
+6. **DOM 级替换** — 在浏览器中直接替换 `<img src>`、`<source srcset>`、CSS background-image、favicon 为 data URI
+7. 删除外部 CDN CSS 链接（避免离线后 403 空白）
+8. 输出单文件 HTML + 截图留档
 
 ### 2.3 关键参数说明
 
@@ -166,14 +168,16 @@ clone_output/
 
 ## 第 4 步：常见问题处理
 
-### 4.1 图片替换失败（replaced = 0/16）
+### 4.1 图片替换失败（replaced < img_map 总数或页面有裂图）
 
-**原因**：HTML 中的图片 URL 和浏览器拦截到的 URL 格式不一致。
-**解决方案**：脚本已内置文件名模糊匹配（去掉扩展名做 key），如果还是失败：
+**原因**：HTML 中的图片 URL 和浏览器拦截到的 URL 格式不一致，或
+       `<picture>` 元素用 `<source srcset>` 而正则没匹配到。
 
-- 手动检查 HTML 中 `<img src="...">` 的 URL 格式
-- 检查拦截到的 response URL 格式
-- 可能在 `page.on("response")` 前已加载的图片不会被捕获（极小概率）
+**解决方案**（脚本已内置）：
+- ✅ 使用 **DOM 级替换** — 在浏览器中通过 `querySelectorAll('img', 'source', 'link[rel*="icon"]')` 直接替换属性
+- ✅ 不再用正则匹配 HTML 文本，避免 `srcset`、`href`、裸 base64 漏网
+- ✅ 如果 page.on("response") 没拦截到某些图片，还有 **httpx 替补下载**
+- 如果还是丢图，检查控制台看 `需要 httpx 补抓: X/Y` 行，看是哪个 URL 失败了
 
 ### 4.2 页面有弹窗/遮罩层
 
@@ -206,7 +210,23 @@ await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
 await asyncio.sleep(2)
 ```
 
-### 4.5 最终文件太大（> 20MB）
+### 4.5 页面是 React SPA（styled-components / emotion），样式不全
+
+**原因**：CSS-in-JS 框架（styled-components, emotion 等）在运行时由 JS 动态注入样式，
+不在外部 CSS 文件里。只拦截 HTTP response 拿不到它们。
+而且 styled-components v6 不再创建带 `.textContent` 的 `<style>` 标签——
+它用 `document.styleSheets.insertRule()` 直接操作浏览器 CSSOM，`<style>` 标签是空的！
+
+**解决方案**：脚本已内置修复 — 从 `document.styleSheets[i].cssRules` 读取运行时样式：
+
+```
+🎯 CSSOM: 341,257 chars   ← 出现这行说明捞到了
+```
+
+如果还是漏样式，检查控制台看 CSSOM 是否为空，或加长等待时间：
+```python
+await asyncio.sleep(5)  # 给 styled-components 更多时间水合
+```
 
 图片 base64 会让文件膨胀约 33%。如果太大：
 1. 只在 `page.on("response")` 中拦截小于 500KB 的图片（改 `len(body) < 2_000_000` 阈值）
