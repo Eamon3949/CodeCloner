@@ -5,7 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.4.0] - 2026-06-09
+## [2.0.0] - 2026-07-10
+
+### Added
+- **新模块: cloner-web（抄网页）** — 把任意网页克隆为完全自包含的单文件 HTML
+  - Playwright 响应拦截技术：在浏览器内存中直接捕获 CSS 和图片，绕过 CDN 403 防盗链
+  - CSS 全部内联 + 图片 base64，无需网络即可离线浏览
+  - 截图留档 + 一键浏览器打开验证
+  - 已验证：OpenAI 中文首页（17 CSS + 16 图片 → 9.2MB 单文件）
+- **路由系统** — 根 SKILL.md 自动判断用户链接类型，路由到对应模块
+  - GitHub/GitLab/Bitbucket 链接 → cloner-code（原抄袭者）
+  - 其他网址 → cloner-web（抄网页）
+  - 支持 `[激活抄袭者]` / `[抄网页]` / 直接丢链接三种激活方式
+- 新增参考文档：
+  - `cloner-web/SKILL.md` — 网页克隆完整工作流
+  - `cloner-web/scripts/clone_intercept.py` — Playwright 拦截脚本模板
+  - `cloner-web/references/page-cloning-notes.md` — 技术原理和已知陷坑
+
+### Changed
+- 根 SKILL.md 从单一流程改为路由入口 + 双模块架构
+- README.md 重写：体现双模块设计，中英文同步更新
+- VERSION → 2.0.0
+
+### Removed
+- 无
 
 ### Added
 - **logo.svg** — Project logo (two overlapping cards with clone badge)

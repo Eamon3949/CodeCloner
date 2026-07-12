@@ -2,16 +2,17 @@
 
 <img src="./logo.svg" width="180" height="180" alt="CodeCloner Logo">
 
-# 🔥 抄袭者 CodeCloner
+# 🔥 CodeCloner
 
-**把别人的开源项目"抄"过来，洗一遍变成你自己的。**
+**克隆一切：抄代码 ↔ 抄网页，同一个工具搞定。**
 
-**Clone any open-source project, rebrand it, and ship it as your own.**
+**Clone anything — open-source repos AND websites. One tool, two modes.**
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/Eamon3949/CodeCloner)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Eamon3949/CodeCloner)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![Skill](https://img.shields.io/badge/type-AI%20Agent%20Skill-purple.svg)](#-怎么安装--how-to-install)
 [![Platforms](https://img.shields.io/badge/platforms-Claude%20Code%20|%20Codex%20|%20OpenClaw%20|%20Hermes-orange.svg)](#-支持的平台--supported-platforms)
+[![Modules](https://img.shields.io/badge/modules-code%20|%20web-brightgreen.svg)](#-模块概览--modules-overview)
 
 **[🇨🇳 中文](#-这是什么)** | **[🇬🇧 English](#-what-is-this)**
 
@@ -21,17 +22,31 @@
 
 ## 🇨🇳 这是什么？
 
+CodeCloner 现在有**两个本事**：
+
+**模块一：抄代码（原「抄袭者」）**
+
 你看到一个开源项目，心想：**"这东西真好，要是叫我的名字就好了。"**
 
-CodeCloner 就是一个 AI Agent 技能文件。你给它一个开源项目链接，说一声 **`[激活抄袭者]`**，AI 就会自动帮你：
-
+CodeCloner 的抄袭者模式会自动帮你：
 1. 🔍 查清项目能不能抄、怎么抄（许可证检查）
 2. 📋 大白话告诉你项目是什么、有什么、要改哪里
 3. ✏️ 按你的要求改名字、换品牌、删功能、加功能
 4. ✅ 验证改完的东西能跑
 5. 📦 打包交付，推到你的仓库
 
-**全程不用写一行代码。你只管提需求，AI 帮你干活。**
+**模块二：抄网页（新增）**
+
+你看到一个网站设计得好看，心想：**"这个页面要是能离线打开就好了。"**
+
+CodeCloner 的抄网页模式会自动帮你：
+1. 🌐 用浏览器加载目标网址
+2. 🔒 绕过 CDN 403，直接抓取所有 CSS 和图片
+3. 📦 把 CSS 内联、图片 base64，生成一个单文件 HTML
+4. 🖼️ 截屏留档
+5. 📤 交付给你，浏览器直接打开，完全离线可用
+
+**全程不用写一行代码。你只管丢链接，AI 帮你干活。**
 
 ### 🌐 支持的平台
 
@@ -57,7 +72,15 @@ git clone https://github.com/Eamon3949/CodeCloner.git ~/.claude/skills/CodeClone
 git clone https://github.com/Eamon3949/CodeCloner.git .claude/skills/CodeCloner
 ```
 
-装完后在任何对话里输入 `[激活抄袭者]` + 项目链接即可触发。
+装完后在任何对话里输入以下关键词即可触发：
+
+| 你想干什么 | 说这个 |
+|-----------|--------|
+| 抄代码仓库（改名换姓） | `[激活抄袭者] https://github.com/xxx/yyy` |
+| 抄网页（离线保存） | `[抄网页] https://example.com` |
+| 自动判断 | 直接丢链接，系统自动判断走哪个模块 |
+
+> **抄网页需要额外装 Playwright 浏览器内核**（AI Agent 会自动帮你装，不用操心）
 
 **OpenAI Codex**
 
@@ -73,24 +96,24 @@ cp SKILL.md /your/project/AGENTS.md
 
 | 特点 | 说明 |
 |:----:|------|
-| 🛡️ **许可证把关** | 自动检查 MIT / Apache / GPL 等许可证，告诉你能不能抄、要遵守什么 |
-| 🔤 **命名全覆盖** | PascalCase、camelCase、kebab-case、snake_case、常量、URL 全部替换，一个不漏 |
-| 🧹 **品牌清洗** | 按 P0 / P1 / P2 优先级逐项清洗，内置 0-100 分干净度评分系统 |
+| 🛡️ **许可证把关** | 抄代码时自动检查 MIT / Apache / GPL 等许可证，告诉你能不能抄、要遵守什么 |
+| 🔤 **命名全覆盖** | 抄代码时 PascalCase、camelCase、kebab-case、snake_case、常量、URL 全部替换，一个不漏 |
+| 🧹 **品牌清洗** | 抄代码时按 P0 / P1 / P2 优先级逐项清洗，内置 0-100 分干净度评分系统 |
+| 🔒 **CDN 破解** | 抄网页时 CDN 403 防盗链也没用，浏览器能看 = 就能拿到资源 |
+| 🎯 **1:1 复刻** | 抄网页时 CSS 全部内联 + 图片 base64，与原站几乎一致 |
 | 💬 **大白话汇报** | 全程用你听得懂的话解释，不懂代码也能做决策 |
 | 🔇 **静音模式** | 加上 `--auto` 全自动跑，只在你需要的时候才打断你 |
-| 📖 **参考文档** | 附带 4 份详细参考（工作流、品牌清单、命名变体、评分系统） |
+| 📖 **参考文档** | 附带 7 份详细参考（工作流、品牌清单、命名变体、评分系统、页面克隆等） |
 
 ### 🚀 怎么用？
 
 **你需要什么？**
 
-- 一个 GitHub / GitLab / Bitbucket 账号
-- 安装了 [Git](https://git-scm.com/)
-- 安装了 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 或 [Codex](https://openai.com/codex/) 或其他 AI Agent 工具
-- 如果要自动推送仓库：安装 [GitHub CLI (gh)](https://cli.github.com/)
+- **抄代码**：一个 Git 平台账号 + Git + AI Agent 工具
+- **抄网页**：AI Agent 工具 + Playwright（会自动安装）
 - **不需要懂代码**
 
-**三步搞定**
+**抄代码：三步搞定**
 
 ```
 第 1 步 ── 发送项目链接
@@ -104,11 +127,24 @@ AI：📋 可行性报告：MIT 协议 ✅ 可以抄，约 120 个文件，预�
 AI：✅ 改完了！已推送到你的仓库
 ```
 
+**抄网页：也是三步搞定**
+
+```
+第 1 步 ── 发送网址
+你：[抄网页] https://example.com
+
+第 2 步 ── 等克隆
+AI：🌐 正在加载页面...  ✅ CSS 17 个（734KB）全部内联 ✅ 图片 16 张全部 base64
+
+第 3 步 ── 打开看效果
+AI：✅ 已生成 full_clone.html（9.2MB），浏览器打开直接看
+```
+
 **静音模式**
 
 ```
 你：https://github.com/某人/某个项目 [激活抄袭者] --auto
-AI：（安静地干活，只在出问题时才问你）
+AI：（安静地干活，只在出问题时才打断你）
 ```
 
 ### 🔄 工作流一览
@@ -179,28 +215,39 @@ AI：（安静地干活，只在出问题时才问你）
 
 ```
 CodeCloner/
-├── SKILL.md                        ← 技能入口（6 步工作流规则）
-├── VERSION                         ← 版本号
-├── LICENSE                         ← MIT 许可证
-├── CHANGELOG.md                    ← 变更日志
-├── logo.svg                        ← 项目 Logo
-├── README.md                       ← 你正在看的这个文件
+├── SKILL.md                         ← 技能入口（路由规则 + 6 步工作流）
+├── VERSION                          ← 版本号
+├── LICENSE                          ← MIT 许可证
+├── CHANGELOG.md                     ← 变更日志
+├── logo.svg                         ← 项目 Logo
+├── README.md                        ← 你正在看的这个文件
 ├── .gitignore
-└── references/
-    ├── workflow.md                  ← 详细工作流（含技术栈决策树）
-    ├── branding-checklist.md       ← 品牌清洗清单（P0/P1/P2 优先级 + grep 模板）
-    ├── naming-variants.md          ← 命名变体映射规则（8 种变体全覆盖）
-    └── cleanliness-score.md        ← 干净度评分系统（0-100 分）
+│
+├── references/                      ← 抄代码模块参考文档
+│   ├── workflow.md                  ← 详细工作流（含技术栈决策树）
+│   ├── branding-checklist.md        ← 品牌清洗检查清单
+│   ├── naming-variants.md           ← 命名变体映射规则
+│   └── cleanliness-score.md         ← 干净度评分系统
+│
+└── cloner-web/                      ← 抄网页模块
+    ├── SKILL.md                     ← 网页克隆专属规则
+    ├── scripts/
+    │   └── clone_intercept.py       ← Playwright 拦截脚本
+    └── references/
+        └── page-cloning-notes.md    ← 页面克隆技术笔记
 ```
 
 ### 📖 参考文档速览
 
 | 文档 | 一句话说明 |
 |------|-----------|
-| [workflow.md](./references/workflow.md) | 每一步具体干什么、怎么干、遇到问题怎么办 |
-| [branding-checklist.md](./references/branding-checklist.md) | 改名字时照着这个清单走，P0 是必须改的 |
-| [naming-variants.md](./references/naming-variants.md) | 项目名的 8 种变体形式，替换时一个不漏 |
-| [cleanliness-score.md](./references/cleanliness-score.md) | 0-100 分评分系统，90 分以上才允许交付 |
+| [workflow.md](./references/workflow.md) | 抄代码：每一步具体干什么、怎么干、遇到问题怎么办 |
+| [branding-checklist.md](./references/branding-checklist.md) | 抄代码：品牌清洗 P0/P1/P2 优先级清单 + grep 模板 |
+| [naming-variants.md](./references/naming-variants.md) | 抄代码：8 种命名变体全覆盖规则 |
+| [cleanliness-score.md](./references/cleanliness-score.md) | 抄代码：0-100 分干净度评分系统 |
+| [cloner-web/SKILL.md](./cloner-web/SKILL.md) | 抄网页：完整工作流和操作指南 |
+| [cloner-web/scripts/clone_intercept.py](./cloner-web/scripts/clone_intercept.py) | 抄网页：Playwright 响应拦截脚本 |
+| [cloner-web/references/page-cloning-notes.md](./cloner-web/references/page-cloning-notes.md) | 抄网页：技术原理和已知陷坑 |
 
 ### 🤝 参与贡献
 
@@ -221,16 +268,31 @@ CodeCloner/
 ## 🇬🇧 What is this?
 
 You found an amazing open-source project. You love it. But it's not yours.
+Or you saw a beautiful website that you wish you could save offline.
 
-CodeCloner is an AI Agent Skill that automates the entire **fork → rebrand → ship** workflow. Give it any open-source repo URL, say **`[activate cloner]`**, and the AI will:
+**CodeCloner now does both.**
 
-1. 🔍 Check if the project can be legally cloned (license compatibility)
-2. 📋 Explain what the project does in plain language
-3. ✏️ Rebrand everything — rename, swap logos, remove/add features per your instructions
-4. ✅ Verify the result actually runs (smoke test + security scan)
-5. 📦 Package it up and push to YOUR repository
+**Module 1: Clone Code (the original "Cloner")**
 
-**Zero code required. You make decisions. The AI does the work.**
+Clone any open-source repo, rebrand it, and ship it as your own. Just say **`[activate cloner]`** + repo URL.
+
+1. 🔍 License check — can you legally clone this?
+2. 📋 Plain-language report — what does it do, what needs changing
+3. ✏️ Interactive rebranding — rename, recolor, remove, add
+4. ✅ Smoke test — does it still run?
+5. 📦 Ship — push to your own repo
+
+**Module 2: Clone Web (new!)**
+
+Clone any website into a self-contained single HTML file. Say **`[clone web]`** + URL.
+
+1. 🌐 Browser loads the page (Playwright)
+2. 🔒 Intercepts all CSS & images *inside the browser* — bypasses CDN 403
+3. 📦 Inlines CSS + base64 images → single standalone HTML
+4. 🖼️ Screenshot for reference
+5. 📤 Delivers — open in browser, works offline
+
+**Zero coding. Just drop a link, let the AI do the work.**
 
 ### 🌐 Supported Platforms
 

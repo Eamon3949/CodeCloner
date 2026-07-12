@@ -1,13 +1,15 @@
 ---
 name: codecloner
-version: 1.4.0
+version: 2.0.0
 platforms: [claude-code, codex, openclaw, hermes-agent]
 description: >-
-  当用户发送一个开源项目网址并输入"激活抄袭者"或"[激活抄袭者]"时激活本 Skill。
-  功能：将目标开源项目"抄"过来，经过交互式重构变成用户自己的项目。
-  核心流程：可行性评估 → 项目结构拆解 → 大白话汇报 → 交互式重构（洗稿定制） → 冒烟验证 → 极简交付。
+  CodeCloner 工具集：克隆一切。
+  双模块架构：
+    - cloner-code：克隆 GitHub/GitLab 代码仓库，品牌清洗+功能定制（原"抄袭者"功能）。
+    - cloner-web：克隆网页，生成完全自包含的单文件 HTML（CSS+图片全内联，绕过 CDN 403）。
+  用户发送链接时自动路由：GitHub/GitLab 链接 → cloner-code；普通网址 → cloner-web。
   兼容 Claude Code、OpenAI Codex、OpenClaw、Hermes Agent 等支持 markdown 指令的 AI Agent 平台。
-  Use when the user wants to fork/clone an open source project and rebrand/customize it as their own.
+  Use when the user wants to clone and customize: GitHub repos → cloner-code, websites → cloner-web.
 ---
 
 # 抄袭者 (CodeCloner) Skill
@@ -17,13 +19,61 @@ description: >-
 >
 > **平台兼容**：本 Skill 不绑定 Claude Code。OpenAI Codex、OpenClaw、Hermes Agent 等任何能读 markdown 规则的 AI Agent 均可使用。
 
+---
+
+## 🚦 路由规则：自动判断走哪个模块
+
+> CodeCloner 现在同时支持"抄代码"和"抄网页"，系统会自动判断你要干什么。
+
+当用户发送一个链接时，按以下规则自动路由：
+
+```
+用户发链接
+    │
+    ├── GitHub.com / GitLab.com / Bitbucket.org  → 走 cloner-code（抄袭者）
+    │   说明：这是一个代码仓库，进入品牌清洗+功能定制流程
+    │
+    └── 其他网址（任意网站） → 走 cloner-web（抄网页）
+        说明：这是一个网页，进入页面克隆流程
+```
+
+### 怎么指定走哪个模块
+
+| 你想干什么 | 说这个 | 会走哪个模块 |
+|-----------|--------|-------------|
+| 抄代码仓库 | `[激活抄袭者] https://github.com/xxx/yyy` | cloner-code |
+| 抄代码仓库 | `激活抄袭者 https://github.com/xxx/yyy` | cloner-code |
+| 抄网页 | `[抄网页] https://example.com` | cloner-web |
+| 抄网页 | `抄网页 https://example.com` | cloner-web |
+| 自动判断 | 直接发链接 | 按 URL 自动路由 |
+| 自动判断 | `[克隆] https://...` | 按 URL 自动路由 |
+
+> **💡 提示**：如果你发的是一个 GitHub 链接但想走网页克隆（比如要克隆 GitHub 的页面而非代码仓库），就说 `[抄网页] https://github.com/xxx` 强制走网页模块。
+
+---
+
+## 模块对照表
+
+| | 抄袭者 (cloner-code) | 抄网页 (cloner-web) |
+|---|---|---|
+| **目标** | GitHub/GitLab 代码仓库 | 任意网站 URL |
+| **核心操作** | 改名换姓、品牌清洗、功能裁剪 | CSS 内联、图片 base64、离线打包 |
+| **输出** | 一个可运行的自有代码项目 | 一个单文件 HTML（浏览器直接打开） |
+| **技术依赖** | git, 文本替换 | Playwright, Python |
+| **说人话** | 把别人的代码项目"洗"成你自己的 | 把别人的网页"拍"下来变成离线文件 |
+
+---
+
 ## 何时激活本 Skill
 
-用户发送一个开源项目网址并输入以下任一关键词时激活：
+用户发送一个链接并输入以下任一关键词时激活：
 
-- `[激活抄袭者]`
-- `激活抄袭者`
-- 任何表达"我要把这个项目抄过来变成自己的"意图的消息
+| 关键词 | 路由到 |
+|--------|--------|
+| `[激活抄袭者]` / `激活抄袭者` | cloner-code（抄代码仓库） |
+| `[抄网页]` / `抄网页` / `克隆这个网站` / `帮我复制这个页面` | cloner-web（抄网页） |
+| 直接发链接（无关键词） | 自动判断：GitHub 等 → code；其他网址 → web |
+| 任何表达"我要抄这个"意图的消息 | 按链接类型自动路由 |
 
 ### 支持的平台
 

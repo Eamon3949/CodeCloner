@@ -13,6 +13,9 @@ out/
 # Clone targets (temporary)
 clone-cache/
 
+# Web clone output
+clone_output/
+
 # OS files
 *.swp
 *.swo
